@@ -45,7 +45,11 @@ if (API_URL) {
 }
 
 // Fallback all other requests to index.html to support React Router
-app.use((req, res) => {
+app.use((req, res, next) => {
+  // Pass through if the request is for assets or API
+  if (req.url.startsWith('/assets/') || req.url.startsWith('/api/')) {
+    return next()
+  }
   res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
 
