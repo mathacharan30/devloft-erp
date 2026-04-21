@@ -6,9 +6,9 @@ import { Toaster } from 'react-hot-toast'
 import App from './App'
 import './index.css'
 
-// In dev mode, the Vite proxy handles auth + CORS
-// In production, set the actual ERPNext URL
-const erpUrl = import.meta.env.DEV ? '' : (import.meta.env.VITE_ERP_URL || '')
+// We route all requests via the relative /api path so that both 
+// Vite's dev proxy and our Production Node server handle CORS + Auth.
+const erpUrl = ''
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
