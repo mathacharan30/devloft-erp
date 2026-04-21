@@ -26,22 +26,26 @@ app.use(express.static(path.join(__dirname, 'dist')))
 
 // Proxy /api requests to Frappe ERPNext backend
 if (API_URL) {
-  app.use(
-    '/api',
-    createProxyMiddleware({
-      target: API_URL,
-      changeOrigin: true,
-      on: {
-        proxyReq: (proxyReq) => {
-          if (API_KEY && API_SECRET) {
-            proxyReq.setHeader('Authorization', `token ${API_KEY}:${API_SECRET}`)
-          }
-          // Remove client Expect header to prevent 417 errors
-          proxyReq.removeHeader('Expect')
-        },
+  const proxy = createProxyMiddleware({
+    target: API_URL,
+    changeOrigin: true,
+    on: {
+      proxyReq: (proxyReq) => {
+        if (API_KEY && API_SECRET) {
+          proxyReq.setHeader('Authorization', `token ${API_KEY}:${API_SECRET}`)
+        }
+        // Remove client Expect header to prevent 417 errors
+        proxyReq.removeHeader('Expect')
       },
-    })
-  )
+    },
+  })
+
+  app.use((req, res, next) => {
+    if (req.url.startsWith('/api/')) {
+      return proxy(req, res, next)
+    }
+    next()
+  })
 }
 
 // Fallback all other requests to index.html to support React Router
