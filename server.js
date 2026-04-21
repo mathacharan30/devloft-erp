@@ -45,7 +45,7 @@ if (API_URL) {
 }
 
 // Fallback all other requests to index.html to support React Router
-app.get('*', (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
 
