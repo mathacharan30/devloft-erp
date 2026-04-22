@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom'
-import { Search, Bell, Menu } from 'lucide-react'
+import { Search, Bell, Menu, Sun, Moon } from 'lucide-react'
+import { useState, useEffect } from 'react'
 
 const pageTitles = {
   '/': 'Dashboard',
@@ -19,6 +20,19 @@ function getPageTitle(pathname) {
 export default function Topbar({ onMenuToggle }) {
   const location = useLocation()
   const title = getPageTitle(location.pathname)
+  
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'dark'
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark')
+  }
 
   return (
     <header className="topbar">
@@ -43,6 +57,9 @@ export default function Topbar({ onMenuToggle }) {
             aria-label="Search"
           />
         </div>
+        <button className="icon-btn" onClick={toggleTheme} aria-label="Toggle Theme">
+          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
         <button className="icon-btn" id="notifications-btn" aria-label="Notifications">
           <Bell size={18} />
           <span className="badge-dot" />

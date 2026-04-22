@@ -4,11 +4,21 @@ import { useFrappeAuth } from 'frappe-react-sdk'
 import {
   LayoutDashboard,
   Users,
+  Building2,
+  Briefcase,
+  FileText,
+  ShoppingCart,
   FolderKanban,
+  CheckSquare,
+  AlertCircle,
+  Clock,
   CreditCard,
   ChevronLeft,
   ChevronRight,
   LogOut,
+  FileSpreadsheet,
+  Landmark,
+  Building,
 } from 'lucide-react'
 import { getInitials } from '../../utils/formatters'
 
@@ -20,10 +30,36 @@ const navItems = [
     ],
   },
   {
-    section: 'Manage',
+    section: 'CRM',
     items: [
       { to: '/leads', icon: Users, label: 'Leads' },
+      { to: '/crm/opportunities', icon: Briefcase, label: 'Opportunities' },
+      { to: '/crm/customers', icon: Building2, label: 'Customers' },
+    ],
+  },
+  {
+    section: 'Sales',
+    items: [
+      { to: '/sales/quotations', icon: FileText, label: 'Quotations' },
+      { to: '/sales/orders', icon: ShoppingCart, label: 'Sales Orders' },
+      { to: '/sales/invoices', icon: FileText, label: 'Sales Invoices' },
+    ],
+  },
+  {
+    section: 'Projects & Support',
+    items: [
       { to: '/projects', icon: FolderKanban, label: 'Projects' },
+      { to: '/projects/tasks', icon: CheckSquare, label: 'Tasks' },
+      { to: '/projects/issues', icon: AlertCircle, label: 'Issues' },
+    ],
+  },
+  {
+    section: 'Time & Finance',
+    items: [
+      { to: '/time/timesheets', icon: Clock, label: 'Timesheets' },
+      { to: '/finance/journal-entries', icon: FileSpreadsheet, label: 'Journal Entries' },
+      { to: '/finance/accounts', icon: Landmark, label: 'Chart of Accounts' },
+      { to: '/finance/cost-centers', icon: Building, label: 'Cost Centers' },
       { to: '/payments', icon: CreditCard, label: 'Payments' },
     ],
   },
